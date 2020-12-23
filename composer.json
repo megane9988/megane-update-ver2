@@ -1,0 +1,13 @@
+{
+    "name": "mgn_megane/megane-auto-update",
+    "authors": [
+        {
+            "name": "hajime OGUSHI",
+            "email": "info@m-g-n.me"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "inc2734/wp-github-plugin-updater": "^3.1"
+    }
+}
