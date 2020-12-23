@@ -2,7 +2,7 @@
 /**
  * Plugin name: 類人猿ブロックパターン（ベータ）test
  * Description: This plugin is a plugin with the sole purpose of being automatically updated.
- * Version: 0.0.2
+ * Version: 0.0.3
  * Requires at least: 5.6
  * Requires PHP: 7.4
  * Requires Snow Monkey: 12.0.0
@@ -13,7 +13,6 @@
  */
 
 
-
 /**
  * 定数を宣言
  */
@@ -22,21 +21,47 @@ define( 'RJE_PLUGIN_PATH', plugin_dir_path( __FILE__ ) ); // このプラグイ�
 define( 'RJE_BASENAME', plugin_basename( __FILE__ ) );    // このプラグインのベースネーム
 
 
+use Inc2734\WP_GitHub_Plugin_Updater\Bootstrap as Updater;
+
 /**
- * テキストドメインを宣言
+ * アップデートの有無の検知及び実施
  */
-function rje_pattern_load_textdomain() {
-	load_plugin_textdomain( 'ruijinen-block-patterns-beta', false, dirname( RJE_BASENAME ) . '/languages/' );
+class RJEAutoUpdate {
+	// 必ず実施する項目として_plugins_loadedを実施.
+	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, '_plugins_loaded' ) );
+	}
+	// 実施する項目
+	public function _plugins_loaded() {
+
+		//翻訳ファイルの読み込み
+		load_plugin_textdomain( 'ruijinen-block-patterns-beta', false, dirname( RJE_BASENAME ) . '/languages/' );
+
+		// アップデート通知機能の読み込みによる、アップデートの有無の確認.
+		add_action( 'init', array( $this, '_activate_autoupdate' ) );
+	}
+
+	/**
+	 * Activate auto update using GitHub 自動アップデートの参照先の設定
+	 *
+	 * @return void
+	 */
+	public function _activate_autoupdate() {
+		new Updater(
+			plugin_basename( __FILE__ ),
+			'megane9988',
+			'megane-update-ver2'
+		);
+	}
 }
-add_action( 'plugins_loaded', 'rje_pattern_load_textdomain' );
+
+new RJEAutoUpdate();
 
 /**
  * inc ファイルの読み込み
  */
 // Snow Monkey および Snow Monkey Blocks が有効化されていない場合の処理
 // require_once RJE_PLUGIN_PATH . 'inc/activate.php';
-// 自動アップデート
-require_once RJE_PLUGIN_PATH . 'inc/auto-update.php';
 // ブロックスタイル及びブロックパターンの設定の読み込み
 // require_once RJE_PLUGIN_PATH . 'inc/load-register-block.php';
 // 管理画面に通知を表示
