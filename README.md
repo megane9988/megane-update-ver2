@@ -1,3 +1,15 @@
-# 利用方法
+[![release](https://github.com/megane9988/megane-auto-update/workflows/Upload%20Release%20Asset/badge.svg)](https://github.com/megane9988/megane-auto-update/actions?query=workflow%3A%22Upload+Release+Asset%22)
 
-- こうします
+自動アップデートを目的としたプラグインです。
+
+
+## How to build
+
+```
+$ yarn
+$ yarn css-build
+```
+
+## 最新版のリリースzip
+
+- https://github.com/megane9988/megane-auto-update/releases/latest/download/megane-auto-update.zip
