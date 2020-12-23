@@ -1,32 +1,38 @@
 <?php
 /**
- * Plugin name: update test
- * Description: This plugin is a plugin with the sole purpose of being automatically updated.
- * Version: 0.0.9
- * Requires at least: 5.6
- * Requires PHP: 7.4
- * Requires Snow Monkey: 12.0.0
+ * Activate auto update using GitHub 自動アップデートの参照先の設定
  *
- * @package megane
- * @author megane9988
- * @license GPL-2.0+
+ * @package ruijinnen
  */
 
+use Inc2734\WP_GitHub_Plugin_Updater\Bootstrap as Updater;
 
-// パスを定数化
-define( 'MGN_UPDATE_TEST_URL', untrailingslashit( plugin_dir_url( __FILE__ ) ) );
-define( 'MGN_UPDATE_TEST_PATH', untrailingslashit( plugin_dir_path( __FILE__ ) ) );
+/**
+ * アップデートの有無の検知及び実施
+ */
+class RJEAutoUpdate {
+	// 必ず実施する項目として_plugins_loadedを実施.
+	public function __construct() {
+		add_action( 'plugins_loaded', array( $this, '_plugins_loaded' ) );
+	}
+	// 実施する項目
+	public function _plugins_loaded() {
+		// アップデート通知機能の読み込みによる、アップデートの有無の確認.
+		add_action( 'init', array( $this, '_activate_autoupdate' ) );
+	}
 
-require_once MGN_UPDATE_TEST_PATH . '/inc/auto-update.php';
+	/**
+	 * Activate auto update using GitHub 自動アップデートの参照先の設定
+	 *
+	 * @return void
+	 */
+	public function _activate_autoupdate() {
+		new Updater(
+			plugin_basename( __FILE__ ),
+			'megane9988',
+			'megane-update-ver2'
+		);
+	}
+}
 
-// /**
-//  * テキストドメインを宣言
-//  */
-// function rje_pattern_load_textdomain() {
-// 	load_plugin_textdomain( 'rui-jin-en-pattern', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
-// }
-// add_action( 'plugins_loaded', 'rje_pattern_load_textdomain' );
-
-// require_once MGN_UPDATE_TEST_PATH . '/inc/is-snow-monkey-theme.php';
-// require_once MGN_UPDATE_TEST_PATH . '/inc/is-snow-monkey-blocks-plugin.php';
-// require_once MGN_UPDATE_TEST_PATH . '/inc/load-register-block.php';
+new RJEAutoUpdate();
