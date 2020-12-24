@@ -28,7 +28,7 @@ class RJEAutoUpdate {
 	 */
 	public function _activate_autoupdate() {
 		new Updater(
-			plugin_basename( __FILE__ ),
+			RJE_BASENAME,
 			'megane9988',
 			'megane-update-ver2'
 		);
