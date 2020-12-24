@@ -2,7 +2,7 @@
 /**
  * Plugin name: 類人猿ブロックパターン（ベータ）test
  * Description: This plugin is a plugin with the sole purpose of being automatically updated.
- * Version: 1.0.4
+ * Version: 1.0.5
  * Requires at least: 5.6
  * Requires PHP: 7.4
  * Requires Snow Monkey: 12.0.0
